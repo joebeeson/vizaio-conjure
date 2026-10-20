@@ -1,6 +1,7 @@
 """Typed, developer-friendly helpers for launching VIZIO Conjure pages."""
 
 from .client import ConjureClient, ConjureDevice
+from .credentials import DeviceProfile, ProfileStore
 from .models import (
     DEFAULT_CONJURE_APP_ID,
     DEFAULT_CONJURE_NAMESPACE,
@@ -14,5 +15,7 @@ __all__ = [
     "ConjureClient",
     "ConjureDevice",
     "ConjureTarget",
+    "DeviceProfile",
+    "ProfileStore",
     "VizioNamespace",
 ]

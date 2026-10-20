@@ -12,6 +12,8 @@ requires-python = ">=3.12"
 authors = [{ name = "Joe Beeson" }]
 keywords = ["vizio", "smartcast", "conjure", "television", "home-assistant"]
 dependencies = [
+  "keyring>=25,<26",
+  "platformdirs>=4,<5",
   "vizaio>=0.7,<0.8",
 ]
 
@@ -22,6 +24,9 @@ dev = [
   "pytest-asyncio>=0.24,<1",
   "pytest-cov>=6,<8",
   "ruff>=0.8,<1",
+]
+discovery = [
+  "zeroconf>=0.135,<1",
 ]
 
 [project.scripts]
