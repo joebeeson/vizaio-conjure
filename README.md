@@ -1,5 +1,10 @@
 # vizaio-conjure
 
+[![CI](https://github.com/joebeeson/vizaio-conjure/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/joebeeson/vizaio-conjure/actions/workflows/ci.yml)
+[![Prek](https://github.com/joebeeson/vizaio-conjure/actions/workflows/prek.yml/badge.svg?branch=main)](https://github.com/joebeeson/vizaio-conjure/actions/workflows/prek.yml)
+[![Latest release](https://img.shields.io/github/v/release/joebeeson/vizaio-conjure?sort=semver)](https://github.com/joebeeson/vizaio-conjure/releases)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Developer-friendly VIZIO Conjure URL launching built on the upstream
 [`vizaio`](https://github.com/raman325/vizaio) SmartCast client.
 
@@ -73,3 +78,13 @@ ConjureTarget("http://host:8765/", name_space=9)
 
 This project deliberately does not implement the internal app-3001 route or
 privileged Conjure surfaces.
+
+## Development and release
+
+Run `uv sync --extra dev` followed by `just check`. The CI workflow tests
+Python 3.12, 3.13, and 3.14, publishes coverage and JUnit artifacts, runs
+Ruff and Pyrefly as separate quality checks, and builds distributions before a
+merge is considered ready. Tagged releases create GitHub release artifacts;
+PyPI publication remains disabled until Trusted Publishing is configured.
+
+See [docs/releasing.md](docs/releasing.md) for the release checklist.
