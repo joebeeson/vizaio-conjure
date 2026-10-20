@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>VIZIO Conjure smoke test</title>
+    <style>
+      :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+      body { display: grid; min-height: 100vh; place-items: center; margin: 0; background: #101820; }
+      main { width: min(80vw, 900px); padding: 4rem; text-align: center; border: 4px solid #66d9ef; border-radius: 1rem; }
+      h1 { font-size: clamp(2rem, 8vw, 6rem); margin: 0 0 1rem; }
+      p { font-size: clamp(1rem, 3vw, 2rem); }
+    </style>
+  </head>
+  <body>
+    <main id="conjure-smoke-marker">
+      <h1>CONJURE OK</h1>
+      <p>VIZIO Conjure launch smoke test</p>
+      <p id="runtime"></p>
+    </main>
+    <script>
+      document.querySelector("#runtime").textContent =
+        `Loaded ${new Date().toISOString()} · ${navigator.userAgent}`;
+    </script>
+  </body>
+</html>

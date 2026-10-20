@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vizaio-conjure"
+version = "0.1.0a1"
+description = "Developer-friendly VIZIO Conjure URL launcher built on vizaio"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+authors = [{ name = "Joe Beeson" }]
+keywords = ["vizio", "smartcast", "conjure", "television", "home-assistant"]
+dependencies = [
+  "vizaio>=0.7,<0.8",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pyrefly>=1.4,<2",
+  "pytest>=8,<9",
+  "pytest-asyncio>=0.24,<1",
+  "pytest-cov>=6,<8",
+  "ruff>=0.8,<1",
+]
+
+[project.scripts]
+vizaio-conjure = "vizaio_conjure.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/joebeeson/vizaio-conjure"
+Repository = "https://github.com/joebeeson/vizaio-conjure"
+Issues = "https://github.com/joebeeson/vizaio-conjure/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/vizaio_conjure"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.pyrefly]
+project-includes = ["src/**/*.py"]
