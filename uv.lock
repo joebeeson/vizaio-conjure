@@ -1002,7 +1002,7 @@ wheels = [
 
 [[package]]
 name = "vizaio-conjure"
-version = "0.1.0a1"
+version = "0.1.0rc1"
 source = { editable = "." }
 dependencies = [
     { name = "keyring" },

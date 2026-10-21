@@ -1,35 +1,57 @@
-name: Publish to Python Package Index
+name: Publish Python package
 
 on:
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       repository:
-        description: Where to publish this checked-out revision
+        description: Registry to publish the selected tag to
         required: true
         default: testpypi
         type: choice
         options: [testpypi, pypi]
+      ref:
+        description: Tag or commit to build (defaults to the current ref)
+        required: false
+        type: string
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
-  group: publish-${{ github.ref }}
+  group: publish-${{ github.event_name == 'release' && (github.event.release.prerelease && 'testpypi' || 'pypi') || inputs.repository }}
   cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: pypi
+    environment:
+      name: ${{ github.event_name == 'release' && (github.event.release.prerelease && 'testpypi' || 'pypi') || inputs.repository }}
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.ref || github.ref }}
       - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
-      - run: uv build
+      - name: Verify release version
+        shell: bash
+        env:
+          TAG: ${{ github.event_name == 'release' && github.event.release.tag_name || inputs.ref || github.ref_name }}
+        run: |
+          test "${TAG#v}" != "$TAG"
+          version="$(uv version --short)"
+          test "$version" = "${TAG#v}"
+      - name: Build distributions
+        shell: bash
+        run: |
+          rm -rf dist
+          uv build
+          uv run --with twine twine check dist/*
       - uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # release/v1
         with:
-          repository-url: ${{ inputs.repository == 'testpypi' && 'https://test.pypi.org/legacy/' || '' }}
+          repository-url: ${{ (github.event_name == 'release' && github.event.release.prerelease) || (github.event_name == 'workflow_dispatch' && inputs.repository == 'testpypi') && 'https://test.pypi.org/legacy/' || '' }}
           skip-existing: true
           attestations: true

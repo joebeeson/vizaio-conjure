@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vizaio-conjure"
-version = "0.1.0a1"
+version = "0.1.0rc1"
 description = "Developer-friendly VIZIO Conjure URL launcher built on vizaio"
 readme = "README.md"
 license = { text = "MIT" }
